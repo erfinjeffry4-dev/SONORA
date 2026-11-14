@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080914">
+  <title>SONORA — Turn Vision Into Sound</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="stars"></div>
+
+<header class="topbar">
+  <a class="brand" href="#home">SONORA<span>.</span></a>
+  <nav>
+    <a href="#studio">Studio</a>
+    <a href="#library">Library</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="system-status" id="systemStatus">
+    <i></i> SYSTEM READY
+  </div>
+</header>
+
+<main id="home">
+
+  <section class="hero">
+    <div class="eyebrow">✦ AN INTERACTIVE IMAGE-TO-SOUND EXPERIENCE</div>
+    <h1>Every image has<br><span>a hidden sound.</span></h1>
+    <p>
+      Explore colours, discover frequencies and transform
+      your photographs into soundscapes.
+    </p>
+    <a class="primary-link" href="#studio">
+      Enter the studio <b>↘</b>
+    </a>
+    <div class="hero-orbit orbit-one"></div>
+    <div class="hero-orbit orbit-two"></div>
+  </section>
+
+  <!-- STUDIO -->
+  <section class="studio-section" id="studio">
+
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">01 / CREATE</span>
+        <h2>The sound studio</h2>
+      </div>
+      <p>Upload an image, then move across it to hear its colours.</p>
+    </div>
+
+    <div class="studio-grid">
+
+      <!-- IMAGE UPLOAD -->
+      <section class="panel image-panel">
+
+        <div class="panel-top">
+          <span>IMAGE CANVAS</span>
+          <span class="live-label">● LIVE INPUT</span>
+        </div>
+
+        <div class="drop-zone" id="dropZone">
+
+          <input type="file" id="imageInput"
+                 accept="image/*" hidden>
+
+          <div class="empty-state" id="emptyState">
+            <div class="upload-symbol">✧</div>
+            <h3>Drop an image into the universe</h3>
+            <p>Choose a photo or drag it here to unlock its soundtrack.</p>
+            <button class="button primary" id="uploadBtn">
+              Choose image
+            </button>
+            <span class="microcopy">JPG · PNG · WEBP</span>
+          </div>
+
+          <canvas id="imageCanvas" hidden></canvas>
+
+          <div class="scan-line" id="scanLine" hidden></div>
+          <div class="canvas-tag" id="canvasTag" hidden>
+            SONORA / IMAGE SCAN
+          </div>
+
+        </div>
+
+        <div class="canvas-footer">
+          <span id="imageName">NO IMAGE LOADED</span>
+          <button class="text-button" id="changeImageBtn">
+            Change image ↗
+          </button>
+        </div>
+
+        <div class="palette-wrap">
+          <div class="subheading">
+            <span>DETECTED COLOURS</span>
+            <span id="paletteStatus">WAITING FOR IMAGE</span>
+          </div>
+
+          <div class="palette" id="palette">
+            <div class="palette-empty">
+              Your colour palette will appear here.
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- SOUND CONTROLS -->
+      <section class="panel controls-panel">
+
+        <div class="panel-top">
+          <span>02 / SOUND DESIGN</span>
+          <span class="sound-state" id="soundState">STOPPED</span>
+        </div>
+
+        <h3>Shape your soundtrack</h3>
+        <p class="muted">
+          Choose a sound world and customize its character.
+        </p>
+
+        <label class="field-label">SOUND ENVIRONMENT</label>
+
+        <div class="mode-grid" id="modeGrid">
+          <button class="mode active" data-mode="dream">✦ <span>Dream</span></button>
+          <button class="mode" data-mode="ocean">≈ <span>Ocean</span></button>
+          <button class="mode" data-mode="galaxy">✧ <span>Galaxy</span></button>
+          <button class="mode" data-mode="nature">❋ <span>Nature</span></button>
+          <button class="mode" data-mode="arcade">▣ <span>Arcade</span></button>
+          <button class="mode" data-mode="cinematic">◉ <span>Cinematic</span></button>
+        </div>
+
+        <div class="slider-group">
+
+          <label for="volume">
+            Master volume <output id="volumeValue">30%</output>
+          </label>
+          <input id="volume" type="range" min="0" max="100" value="30">
+
+          <label for="bass">
+            Bass <output id="bassValue">50%</output>
+          </label>
+          <input id="bass" type="range" min="0" max="100" value="50">
+
+          <label for="treble">
+            Treble <output id="trebleValue">50%</output>
+          </label>
+          <input id="treble" type="range" min="0" max="100" value="50">
+
+          <label for="reverb">
+            Reverb <output id="reverbValue">35%</output>
+          </label>
+          <input id="reverb" type="range" min="0" max="100" value="35">
+
+          <label for="echo">
+            Echo <output id="echoValue">20%</output>
+          </label>
+          <input id="echo" type="range" min="0" max="100" value="20">
+
+          <label for="sensitivity">
+            Sound sensitivity <output id="sensitivityValue">1.0×</output>
+          </label>
+          <input id="sensitivity" type="range" min="50" max="200" value="100">
+
+        </div>
+
+        <div class="transport">
+          <button class="button primary" id="startBtn">
+            ▶ Start sound
+          </button>
+          <button class="button secondary" id="stopBtn" disabled>
+            ■ Stop
+          </button>
+        </div>
+
+        <div class="record-row">
+          <button class="button record" id="recordBtn" disabled>
+            ● Record soundtrack
+          </button>
+          <button class="button secondary" id="saveBtn" disabled>
+            ＋ Save
+          </button>
+        </div>
+
+        <p class="hint" id="hint">
+          Upload an image, start sound, then glide across the canvas.
+        </p>
+
+      </section>
+    </div>
+  </section>
+
+  <!-- VISUALIZER -->
+  <section class="visual-section">
+
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">03 / VISUALIZE</span>
+        <h2>Sound in motion</h2>
+      </div>
+      <p>Watch the audio spectrum respond to your image.</p>
+    </div>
+
+    <div class="panel visual-panel">
+      <div class="visual-toolbar">
+        <span>LIVE FREQUENCY FIELD</span>
+        <span id="frequencyReadout">440 Hz · WAITING</span>
+      </div>
+
+      <canvas id="visualCanvas"></canvas>
+
+      <div class="visual-caption">
+        <span>LOW FREQUENCY</span>
+        <span>HIGH FREQUENCY</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="compare-section">
+
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">04 / EXPLORE</span>
+        <h2>See the sound</h2>
+      </div>
+      <p>Compare your original image with its sound visualization.</p>
+    </div>
+
+    <div class="compare-grid">
+
+      <div class="panel compare-card">
+        <span class="card-kicker">ORIGINAL IMAGE</span>
+        <div class="compare-preview" id="originalPreview">
+          Upload an image to begin
+        </div>
+      </div>
+
+      <div class="panel compare-card">
+        <span class="card-kicker">SONORA VISUAL FIELD</span>
+        <div class="compare-preview generated-preview" id="generatedPreview">
+          <div class="generated-rings"></div>
+          <span>YOUR IMAGE, REIMAGINED</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- LIBRARY -->
+  <section class="library-section" id="library">
+
+    <div class="section-heading">
+      <div>
+        <span class="eyebrow">05 / COLLECTION</span>
+        <h2>Your sound library</h2>
+      </div>
+      <p>Keep track of soundscapes you create on this device.</p>
+    </div>
+
+    <div class="panel library-panel">
+      <div class="library-list" id="libraryList">
+        <div class="library-empty">
+          Your saved soundtracks will appear here.
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about-section" id="about">
+    <span class="eyebrow">THE IDEA BEHIND SONORA</span>
+
+    <h2>
+      Turning visual information<br>
+      <span>into an audible experience.</span>
+    </h2>
+
+    <p>
+      SONORA uses image pixels as a creative source.
+      Brightness, colour and position influence synthesized
+      notes, allowing you to explore a photograph through sound.
+      It is an artistic sonification experiment, not an AI
+      description of the image.
+    </p>
+
+    <div class="about-stats">
+      <div><b>01</b><span>IMAGE</span></div>
+      <div><b>02</b><span>COLOUR</span></div>
+      <div><b>03</b><span>FREQUENCY</span></div>
+      <div><b>04</b><span>SOUND</span></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <a class="brand" href="#home">SONORA<span>.</span></a>
+  <span>TURN VISION INTO SOUND.</span>
+  <span>© 2026 SONORA EXPERIMENT</span>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
